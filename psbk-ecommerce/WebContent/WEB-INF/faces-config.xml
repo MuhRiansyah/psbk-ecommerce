@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+    version="2.2">
+
+	<managed-bean>
+		<managed-bean-name>produkBean</managed-bean-name>
+		<managed-bean-class>beans.ProdukBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>shoppingCart</managed-bean-name>
+		<managed-bean-class>beans.ShoppingCart</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>transaksiBean</managed-bean-name>
+		<managed-bean-class>beans.TransaksiBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<navigation-rule>
+		<display-name>public/detailProduk.xhtml</display-name>
+		<from-view-id>/public/detailProduk.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>belajar</from-outcome>
+			<to-view-id>/public/pembelianProduk.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>public/daftarProduk.xhtml</display-name>
+		<from-view-id>/public/daftarProduk.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>#{produkBean.toDetailProduk()}</from-outcome>
+			<to-view-id>/public/detailProduk.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+</faces-config>

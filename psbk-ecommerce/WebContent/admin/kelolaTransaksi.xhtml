@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="template_admin.xhtml">
+
+	<ui:define name="body">
+		<p:growl id="growl" life="3000"></p:growl>
+
+		<h:form id="TransaksiListForm">
+
+			<p:dataTable id="datalist"
+				value="#{transaksiBean.daftarTransaksiAdmin}" var="item"
+				selectionMode="single" selection="#{transaksiBean.selected}"
+				rowKey="#{item.idTransaksi}" paginator="true" rows="7">
+
+				<f:facet name="header">
+					<p:commandButton id="createButton" icon="ui-icon-plus"
+						value="Tambah Transaksi"
+						onclick="PF('TransaksiCreateDialog').show();" />
+				</f:facet>
+
+				<p:ajax event="rowSelect"
+					update="createButton editButton deleteButton" />
+				<p:ajax event="rowUnselect"
+					update="createButton editButton deleteButton" />
+
+				<p:column sortBy="#{item.produk.nama}"
+					filterBy="#{item.produk.nama}">
+					<f:facet name="header">
+						<h:outputText value="Nama" />
+					</f:facet>
+					<h:outputText value="#{item.produk.nama}" />
+				</p:column>
+
+				<p:column sortBy="#{item.biayaPembayaranProduk}"
+					filterBy="#{item.biayaPembayaranProduk}">
+					<f:facet name="header">
+						<h:outputText value="Biaya Pembayaran Produk" />
+					</f:facet>
+					<h:outputText value="#{item.biayaPembayaranProdukString}" />
+				</p:column>
+
+				<p:column sortBy="#{item.waktu_pemesanan}"
+					filterBy="#{item.waktu_pemesanan}">
+					<f:facet name="header">
+						<h:outputText value="Waktu Pemesanan" />
+					</f:facet>
+					<h:outputText value="#{item.waktu_pemesanan}" />
+				</p:column>
+
+				<p:column sortBy="#{item.nama_pelanggan}"
+					filterBy="#{item.nama_pelanggan}">
+					<f:facet name="header">
+						<h:outputText value="Pelanggan" />
+					</f:facet>
+					<h:outputText value="#{item.nama_pelanggan}" />
+				</p:column>
+
+				<p:column sortBy="#{item.status_pemesanan}"
+					filterBy="#{item.status_pemesanan}">
+					<f:facet name="header">
+						<h:outputText value="Status Pemesanan" />
+					</f:facet>
+					<h:outputText value="#{item.status_pemesanan}" />
+				</p:column>
+
+				<p:column width="35%">
+					<p:commandButton id="setujuiButton" icon="ui-icon-check"
+						value="Setujui Pemesanan" update=":growl,datalist"
+						disabled="#{empty transaksiBean.selected}" />
+
+					<p:commandButton id="editButton" icon="ui-icon-pencil" value="Ubah"
+						update=":transaksiEditForm:grid_edit"
+						onclick="PF('TransaksiEditDialog').show();"
+						disabled="#{empty transaksiBean.selected}" />
+
+					<p:commandButton id="deleteButton" icon="ui-icon-trash"
+						value="Hapus" actionListener="#{transaksiBean.delete}"
+						update=":growl,datalist"
+						disabled="#{empty transaksiBean.selected}" />
+
+					<p:commandButton id="detailButton" icon="ui-icon-search"
+						update=":transaksiDetailForm:grid_detail" value="Detil"
+						onclick="PF('TransaksiDetailDialog').show();"
+						disabled="#{empty transaksiBean.selected}" />
+				</p:column>
+
+
+			</p:dataTable>
+		</h:form>
+
+		<p:dialog id="TransaksiCreateDlg" widgetVar="TransaksiCreateDialog"
+			modal="false" resizable="false" appendToBody="true"
+			header="Create Transaksi" closeOnEscape="true" showEffect="bounce"
+			hideEffect="puff">
+
+			<h:form id="TransaksiCreateForm" enctype="multipart/form-data">
+				<p:growl id="messages" showDetail="true" />
+
+				<h:panelGroup id="display">
+					<p:panelGrid id="grid_edit" columns="2">
+					</p:panelGrid>
+
+					<h:commandButton actionListener="#{transaksiBean.simpan}"
+						value="Simpan" update="display,:TransaksiListForm:datalist,:growl" />
+
+				</h:panelGroup>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog id="TransaksiEditDlg" widgetVar="TransaksiEditDialog"
+			modal="false" resizable="false" appendToBody="true"
+			header="Edit Transaksi" closeOnEscape="true" showEffect="bounce"
+			hideEffect="puff">
+
+			<h:form id="transaksiEditForm">
+				<h:panelGroup id="display">
+					<p:panelGrid id="grid_edit" columns="2">
+					</p:panelGrid>
+
+					<p:commandButton actionListener="#{transaksiBean.ubah}"
+						value="Ubah" update="display,:TransaksiListForm:datalist,:growl"
+						oncomplete="handleSubmit(xhr,status,args,TransaksiEditDialog);" />
+				</h:panelGroup>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog id="TransaksiDetailDlg" widgetVar="TransaksiDetailDialog"
+			modal="false" resizable="false" appendToBody="true"
+			header="Detail Transaksi" closeOnEscape="true" showEffect="bounce"
+			hideEffect="puff">
+
+			<h:form id="transaksiDetailForm">
+				<h:panelGroup id="display">
+					<p:panelGrid id="grid_detail" columns="2">
+
+						<p:outputLabel value="Produk Yang Dibeli" for="nama" />
+						<p:outputLabel id="nama"
+							value="#{transaksiBean.selected.produk.nama}" />
+
+						<p:outputLabel value="Harga Satuan" for="hargaSatuan" />
+						<p:outputLabel id="hargaSatuan"
+							value="#{transaksiBean.selected.produk.harga}" />
+
+						<p:outputLabel value="Kuantitas" for="kuantitas" />
+						<p:outputLabel id="kuantitas"
+							value="#{transaksiBean.selected.kuantitas}" />
+
+						<p:outputLabel value="Pembayaran Produk" for="pembayaranProduk" />
+						<p:outputLabel id="pembayaranProduk"
+							value="#{transaksiBean.selected.biayaPembayaranProdukString}" />
+						<p:outputLabel value="Biaya Kurir" for="biayaKurir" />
+						<p:outputLabel id="biayaKurir"
+							value="#{transaksiBean.selected.kurir.biayaString}" />
+
+						<p:outputLabel value="Total Pembayaran" for="totalPembayaran" />
+						<p:outputLabel id="totalPembayaran"
+							value="#{transaksiBean.selected.totalPembayaranString}" />
+
+
+
+
+						<p:outputLabel value="Kurir" for="kurir" />
+						<p:outputLabel id="kurir"
+							value="#{transaksiBean.selected.kurir.nama}" />
+
+						<p:outputLabel value="Kota Tujuan" for="kotaTujuan" />
+						<p:outputLabel id="kotaTujuan"
+							value="#{transaksiBean.selected.kurir.kota}" />
+
+						<p:outputLabel value="Waktu Pemesanan" for="waktuPemesanan" />
+						<p:outputLabel id="waktuPemesanan"
+							value="#{transaksiBean.selected.waktu_pemesanan}" />
+
+						<p:outputLabel value="Pelanggan Yang Membeli" for="namaPelanggan" />
+						<p:outputLabel id="namaPelanggan"
+							value="#{transaksiBean.selected.nama_pelanggan}" />
+
+						<p:outputLabel value="Status Pemesanan" for="statusPemesanan" />
+						<p:outputLabel id="statusPemesanan"
+							value="#{transaksiBean.selected.status_pemesanan}" />
+
+					</p:panelGrid>
+				</h:panelGroup>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14262138143011" configfile="/psbk-ecommerce/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="public/detailProduk.xhtml" x="120" y="55" id="pf14280138437300" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" outlinks="pf14280138437301" inlinks="pf14280461092910" path="/public/detailProduk.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="public/pembelianProduk.xhtml" x="360" y="55" id="pf14280138437302" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf14280138437301" path="/public/pembelianProduk.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="public/daftarProduk.xhtml" x="119" y="180" id="pf14280461092911" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf14280461092910" path="/public/daftarProduk.xhtml"/>
+  <links id="pf14280138437301" target="pf14280138437302" source="pf14280138437300" outcome="belajar"/>
+  <links id="pf14280461092910" target="pf14280138437300" source="pf14280461092911" outcome="#{produkBean.toDetailProduk()}"/>
+</pageflow:Pageflow>

@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title><ui:insert name="title">Admin | SI Pengelolaan Mahasiswa</ui:insert></title>
+	<h:outputStylesheet library="css" name="animate.css" />
+	<h:outputStylesheet library="css" name="reset.css" />
+	<h:outputStylesheet library="css" name="styles.css" />
+	<h:outputStylesheet library="css" name="pfcrud.css" />
+</h:head>
+<h:body>
+
+	<p:layoutUnit position="north">
+		<h3>ISLAM ADDICTED</h3>
+		<h:form id="menuForm">
+			<p:menubar>
+				<p:menuitem value="Home" outcome="daftarProduk.jsf"
+					icon="ui-icon-home" />
+				<p:menuitem value="Produk Toko" outcome="daftarProduk.jsf"
+					icon="ui-icon" />
+			</p:menubar>
+		</h:form>
+	</p:layoutUnit>
+
+	<p:layoutUnit position="center">	
+		<h:form style="margin : 100px 200px;" id="tabelcart">
+			<p:dataTable value="#{shoppingCart.cart}" var="cart" 
+				cellpadding="7px" style="border-collapse : collapse;width: 1000px;
+				">
+				<p:column>
+					<f:facet name="header">Gambar</f:facet>
+					<h:graphicImage
+						value="//resources/images/mac-apple/#{cart.produk.gambar}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">Nama</f:facet>
+					#{cart.produk.nama}
+				</p:column>
+				<p:column>
+					<f:facet name="header">Harga</f:facet>
+					#{cart.produk.harga}
+				</p:column>
+				<p:column>
+					<f:facet name="header">Kuantitas</f:facet>
+					<p:inputText value="#{cart.kuantitas}">
+						<p:ajax event="keyup"  
+						update="total" />
+					</p:inputText>
+				</p:column>
+				<p:column>
+					<f:facet name="header">Total</f:facet>
+					<p:outputLabel id="total" 
+					value="#{shoppingCart.getTotal(cart.kuantitas,cart.produk.hargaInt)}"/>															
+				</p:column>
+				<p:column>
+					<f:facet name="header">Kelola Keranjang</f:facet>
+					<p:commandButton value="hapus produk" action="#{shoppingCart.remove(cart)}"
+					update=":tabelcart"/>																				
+				</p:column>												
+				<f:facet name="footer">
+					<p:outputLabel id="totalBelanja" 
+					value="Total Belanjaan: #{shoppingCart.totalBelanjaan}"/>
+					<p:commandButton value="Lakukan Pembayaran!" action="#{shoppingCart.updateCart()}"
+					update=":tabelcart"
+					/>					
+					<p:commandButton value="perbaharui keranjang" action="#{shoppingCart.updateCart()}"
+					update=":tabelcart"
+					/>
+					<p:commandButton value="kosongkan keranjang" action="#{shoppingCart.removeCart()}"
+					update=":tabelcart"/>
+				</f:facet>												
+			</p:dataTable>
+		</h:form>
+	</p:layoutUnit>
+
+	<p:layoutUnit position="south">
+		<center>@Copyright 2015 - Islam Addicted Corp</center>
+	</p:layoutUnit>
+
+
+
+
+</h:body>
+
+
+</html>

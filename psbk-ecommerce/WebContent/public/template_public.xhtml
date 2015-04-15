@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+	<title><ui:insert name="title">Admin | SI Pengelolaan Mahasiswa</ui:insert></title>
+	<h:outputStylesheet library="css" name="animate.css" />
+	<h:outputStylesheet library="css" name="reset.css" />
+	<h:outputStylesheet library="css" name="styles.css" />
+	<h:outputStylesheet library="css" name="pfcrud.css" />	
+</h:head>
+
+<h:body>
+
+	
+	<p:layout fullPage="true">
+		<p:layoutUnit position="north" style="z-index:2">
+			<h3>ISLAM ADDICTED</h3>
+			<ui:include src="appMenu.xhtml"/>						
+		</p:layoutUnit>
+		
+		<p:layoutUnit position="center" style="z-index:1;" >
+						
+			<ui:insert name="body" />						
+		</p:layoutUnit>
+
+		<p:layoutUnit position="south" >
+				<center>@Copyright 2015 - Islam Addicted Corp</center>
+		</p:layoutUnit>		
+
+
+
+	</p:layout>
+
+</h:body>
+
+</html>

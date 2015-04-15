@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<p:growl id="growl" life="3000" />
+	<p:dialog id="mahasiswaCreateDlg" widgetVar="mahasiswaCreateDialog" 
+		modal="false" resizable="false" appendToBody="true"   
+		header="Create mahasiswa" closeOnEscape="true" showEffect="bounce">
+
+		<h:form id="mahasiswaCreateForm">
+
+			<h:panelGroup id="display">
+				<p:panelGrid columns="2">
+
+					<p:outputLabel value="NRP" for="nrp" />
+					<p:inputText id="nrp" value="#{mahasiswaBean.nrp}" title="nrp" />
+
+					<p:outputLabel value="Nama" for="nama" />
+					<p:inputText id="nama" value="#{mahasiswaBean.nama}" title="nama" />
+
+					<p:outputLabel value="Fakultas" for="fakultas" />
+					<p:inputText id="fakultas" value="#{mahasiswaBean.fakultas}"
+						title="fakultas" />
+
+					<p:outputLabel value="jurusan" for="jurusan" />
+					<p:inputText id="jurusan" value="#{mahasiswaBean.jurusan}"
+						title="jurusan" />
+				</p:panelGrid>
+
+				<p:commandButton actionListener="#{mahasiswaBean.simpan}"
+					value="Simpan" update="display,:mahasiswaListForm:datalist,:growl" />
+				<p:commandButton value="Cancel"
+					onclick="mahasiswaCreateDialog.hide()" />
+
+			</h:panelGroup>
+
+		</h:form>
+
+	</p:dialog>
+	<p:dialog id="mahasiswaEditDlg" widgetVar="mahasiswaEditDialog"
+		modal="false" resizable="false" appendToBody="true"
+		header="Edit mahasiswa" closeOnEscape="true" showEffect="bounce"
+		hideEffect="puff">
+
+		<h:form id="mahasiswaEditForm">
+			<h:panelGroup id="display">
+				<p:panelGrid id="grid_edit" columns="2">
+
+					<p:outputLabel value="Nama" for="nama" />
+					<p:inputText id="nama" value="#{mahasiswaBean.selected.nama}"
+						title="nama" />
+
+					<p:outputLabel value="Fakultas" for="fakultas" />
+					<p:inputText id="fakultas"
+						value="#{mahasiswaBean.selected.fakultas}" title="fakultas" />
+
+					<p:outputLabel value="Jurusan" for="jurusan" />
+					<p:inputText id="jurusan" value="#{mahasiswaBean.selected.jurusan}"
+						title="jurusan" />
+
+				</p:panelGrid>
+				<p:commandButton actionListener="#{mahasiswaBean.ubah}" value="Edit"
+					update="display,:mahasiswaListForm:datalist,:growl"
+					oncomplete="handleSubmit(xhr,status,args,mahasiswaEditDialog);" />
+				<p:commandButton value="Cancle" onclick="mahasiswaEditDialog.hide()" />
+			</h:panelGroup>
+		</h:form>
+	</p:dialog>
+
+	<p:dialog id="mahasiswaDetailDlg" widgetVar="mahasiswaDetailDialog"
+		modal="false" resizable="false" appendToBody="true"
+		header="Detail mahasiswa" closeOnEscape="true" showEffect="bounce"
+		hideEffect="puff">
+
+		<h:form id="mahasiswaDetailForm">
+			<h:panelGroup id="display">
+
+				<p:panelGrid id="grid_detail" columns="2">
+					<p:outputLabel value="NRP" for="nrp" />
+					<p:outputLabel id="nrp" value="#{mahasiswaBean.selected.nrp}"
+						title="nrp" />
+
+					<p:outputLabel value="Nama" for="nama" />
+					<p:outputLabel id="nama" value="#{mahasiswaBean.selected.nama}"
+						title="nama" />
+
+					<p:outputLabel value="Fakultas" for="fakultas" />
+					<p:outputLabel id="fakultas"
+						value="#{mahasiswaBean.selected.fakultas}" title="fakultas" />
+
+					<p:outputLabel value="Jurusan" for="jurusan" />
+					<p:outputLabel id="jurusan"
+						value="#{mahasiswaBean.selected.jurusan}" title="jurusan" />
+
+
+				</p:panelGrid>
+			</h:panelGroup>
+		</h:form>
+	</p:dialog>
+	
+    	
+
+
+</ui:composition>

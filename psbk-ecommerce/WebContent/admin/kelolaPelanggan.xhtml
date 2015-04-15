@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="template_admin.xhtml">
+
+	<ui:define name="body">
+		<p:growl id="growl" life="3000"></p:growl>
+
+		<h:form id="ProdukListForm">
+
+			<p:dataTable id="datalist" value="#{produkBean.daftarProdukAdmin}"
+				var="item" selectionMode="single" selection="#{produkBean.selected}"
+				rowKey="#{item.idproduk}" paginator="true" rows="7">
+
+				<f:facet name="header">
+					<p:commandButton id="createButton" icon="ui-icon-plus"
+						value="Tambah Produk" onclick="PF('ProdukCreateDialog').show();" />
+				</f:facet>
+
+				<p:ajax event="rowSelect"
+					update="createButton editButton deleteButton" />
+				<p:ajax event="rowUnselect"
+					update="createButton editButton deleteButton" />
+
+				<p:column width="10%">
+					<h:graphicImage value="//resources/images/gambarProduk/#{item.gambar}"
+						width="100px" />
+				</p:column>
+
+				<p:column sortBy="#{item.nama}" filterBy="#{item.nama}">
+					<f:facet name="header">
+						<h:outputText value="Nama" />
+					</f:facet>
+					<h:outputText value="#{item.nama}" />
+				</p:column>
+
+				<p:column sortBy="#{item.kategori}" filterBy="#{item.kategori}">
+					<f:facet name="header">
+						<h:outputText value="kategori" />
+					</f:facet>
+					<h:outputText value="#{item.kategori}" />
+				</p:column>
+
+				<p:column sortBy="#{item.merek}" filterBy="#{item.merek}">
+					<f:facet name="header">
+						<h:outputText value="merek" />
+					</f:facet>
+					<h:outputText value="#{item.merek}" />
+				</p:column>
+
+				<p:column sortBy="#{item.hargaInt}" filterBy="#{item.hargaInt}">
+					<f:facet name="header">
+						<h:outputText value="Harga" />
+					</f:facet>
+					<h:outputText value="#{item.harga}" />
+				</p:column>
+
+				<p:column width="20%">
+					<p:commandButton id="editButton" icon="ui-icon-pencil" value="Ubah"
+						update=":produkEditForm:grid_edit"
+						onclick="PF('ProdukEditDialog').show();"
+						disabled="#{empty produkBean.selected}" />
+
+					<p:commandButton id="deleteButton" icon="ui-icon-trash"
+						value="Hapus" actionListener="#{produkBean.delete}"
+						update=":growl,datalist" disabled="#{empty produkBean.selected}" />
+
+					<p:commandButton id="detailButton" icon="ui-icon-search"
+						update=":produkDetailForm:grid_detail" value="Detil"
+						onclick="PF('ProdukDetailDialog').show();"
+						disabled="#{empty produkBean.selected}" />
+				</p:column>
+
+
+			</p:dataTable>
+		</h:form>
+
+		<p:dialog id="ProdukCreateDlg" widgetVar="ProdukCreateDialog"
+			modal="false" resizable="false" appendToBody="true"
+			header="Create Produk" closeOnEscape="true" showEffect="bounce"
+			hideEffect="puff">
+
+			<h:form id="ProdukCreateForm" enctype="multipart/form-data">
+				<p:growl id="messages" showDetail="true" />
+
+				<h:panelGroup id="display">
+					<p:panelGrid id="grid_edit" columns="2">
+						<p:outputLabel value="Nama" for="nama" />
+						<p:inputText id="nama" value="#{produkBean.nama}"
+							title="nama" />
+						<p:outputLabel value="Harga" for="harga" />
+						<p:inputText id="harga" value="#{produkBean.harga}"
+							title="harga" />
+
+						<p:outputLabel value="Merek" for="merek" />
+						<p:selectOneMenu id="merek"
+							value="#{produkBean.merek}">
+							<f:selectItem itemLabel="Pilih Merek" itemValue=""
+								noSelectionOption="true" />
+							<f:selectItems value="#{produkBean.listOpsiMerek}" />
+						</p:selectOneMenu>
+						
+						<p:outputLabel value="Kategori" for="kategori" />
+						<p:selectOneMenu id="kategori"
+							value="#{produkBean.kategori}">
+							<f:selectItem itemLabel="Pilih Kategori" itemValue=""
+								noSelectionOption="true" />
+							<f:selectItems value="#{produkBean.listOpsiKategori}" />
+						</p:selectOneMenu>
+						<p:outputLabel value="Gambar" for="gambar" />
+						<h:inputFile id="gambar" value="#{produkBean.file}"> </h:inputFile>						
+					</p:panelGrid>											
+					
+					
+					
+					<h:commandButton actionListener="#{produkBean.simpan}"
+						value="Simpan" update="display,:ProdukListForm:datalist,:growl" />
+	
+				</h:panelGroup>
+
+			</h:form>
+
+		</p:dialog>
+
+		<p:dialog id="ProdukEditDlg" widgetVar="ProdukEditDialog"
+			modal="false" resizable="false" appendToBody="true"
+			header="Edit Produk" closeOnEscape="true" showEffect="bounce"
+			hideEffect="puff">
+
+			<h:form id="produkEditForm">
+				<h:panelGroup id="display">
+					<p:panelGrid id="grid_edit" columns="2">
+						<p:outputLabel value="Nama" for="nama" />
+						<p:inputText id="nama" value="#{produkBean.selected.nama}"
+							title="nama" />
+						<p:outputLabel value="Harga" for="harga" />
+						<p:inputText id="harga" value="#{produkBean.selected.hargaInt}"
+							title="harga" />
+
+						<p:outputLabel value="Merek" for="merek" />
+						<p:selectOneMenu id="merek"
+							value="#{produkBean.merek}">
+							<f:selectItem itemLabel="Pilih Merek" itemValue=""
+								noSelectionOption="true" />
+							<f:selectItems value="#{produkBean.listOpsiMerek}" />						
+						</p:selectOneMenu>
+						
+						<p:outputLabel value="Kategori" for="kategori" />
+						<p:selectOneMenu id="kategori"
+							value="#{produkBean.kategori}">
+							<f:selectItem itemLabel="Pilih Kategori" itemValue=""
+								noSelectionOption="true" />
+							<f:selectItems value="#{produkBean.listOpsiKategori}" />							
+						</p:selectOneMenu>						
+					</p:panelGrid>
+					
+					<p:commandButton actionListener="#{produkBean.ubah}" value="Ubah"
+						update="display,:ProdukListForm:datalist,:growl"
+						oncomplete="handleSubmit(xhr,status,args,ProdukEditDialog);" />										
+				</h:panelGroup>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog id="ProdukDetailDlg" widgetVar="ProdukDetailDialog"
+			modal="false" resizable="false" appendToBody="true"
+			header="Detail Produk" closeOnEscape="true" showEffect="bounce"
+			hideEffect="puff">
+
+			<h:form id="produkDetailForm">
+				<h:panelGroup id="display">
+					<p:graphicImage
+						value="images/mac-apple/#{produkBean.selected.gambar}" />
+					<p:panelGrid id="grid_detail" columns="2">
+						<p:outputLabel value="Nama" for="nama" />
+						<p:outputLabel id="nama" value="#{produkBean.selected.nama}"
+							title="nama" />
+						<p:outputLabel value="Harga" for="harga" />
+						<p:outputLabel id="harga" value="#{produkBean.selected.harga}"
+							title="harga" />
+					</p:panelGrid>
+				</h:panelGroup>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>

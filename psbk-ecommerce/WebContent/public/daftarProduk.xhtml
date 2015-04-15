@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" template="template_public.xhtml">
+
+	<ui:define name="body">
+
+		<p:layout>
+			<p:layoutUnit position="center">
+				<h:form id="opsiPengurutan">
+					<p:selectOneMenu id="pengurutan"
+						value="#{produkBean.opsiPengurutan}">
+						<f:selectItem itemLabel="Urut Berdasarkan" itemValue=""
+							noSelectionOption="true" />
+						<f:selectItems value="#{produkBean.listOpsiPengurutan}" />
+						<p:ajax update=":ProdukListForm:datalist" />
+					</p:selectOneMenu>
+				</h:form>
+
+				<p:separator />
+
+				<p:growl id="msgs" showDetail="true" />
+
+				<h:form id="ProdukListForm">
+					<p:dataGrid id="datalist" value="#{produkBean.daftarProduk}"
+						var="item" itemType="none" paginator="true" rows="7"
+						styleClass="paginated">
+						<h:panelGrid columns="1" style="width:100%;text-align:center">
+							<h:graphicImage
+								value="//resources/images/mac-apple/#{item.gambar}" />
+
+
+							<h:outputText value="#{item.nama}"
+								style="font-weight: bold;font-size:10pt" />
+							<br />
+							<div style="font-size: 8pt; text-align: left">													
+								<li>#{item.spesifikasi1}</li>
+								<li>#{item.spesifikasi2}</li>
+								<li>#{item.spesifikasi3}</li>
+							</div>
+							<br />
+							<h:outputText value="#{item.harga}"
+								style="font-weight: bold;font-size:13pt" />
+							<br />
+							<h:commandButton value="Detail Produk"
+								action="#{produkBean.toDetailProduk(item.idproduk)}"
+								style="width: 100px" />
+
+						</h:panelGrid>
+					</p:dataGrid>
+				</h:form>
+			</p:layoutUnit>
+
+			<p:layoutUnit position="west">
+				<p:menu>
+					<p:menuitem value="Beranda" outcome="dialogMahasiswa.xhtml" />
+					<p:menuitem value="Produk" outcome="dialogMahasiswa.xhtml" />
+					<p:menuitem value="Produk" outcome="dialogMahasiswa.xhtml" />
+					<p:menuitem value="Produk" outcome="dialogMahasiswa.xhtml" />
+				</p:menu>
+			</p:layoutUnit>
+		</p:layout>
+
+	</ui:define>
+</ui:composition>
+
+
+
+
+
+
+
+

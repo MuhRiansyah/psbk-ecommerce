@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" template="template_public.xhtml">
+
+	<ui:define name="body">
+
+		<p:layout>
+			<p:growl id="growl" />
+			<h:form>
+				<p:dataGrid value="#{produkBean.itemProduk}" var="produk"
+					produkType="none" paginator="false">
+					<h:panelGrid columns="1" style="width:100%;text-align:center">
+
+						<h:graphicImage
+							value="//resources/images/mac-apple/#{produk.gambar}" />
+
+						<h:outputText value="#{produk.nama}"
+							style="font-weight: bold;font-size:18pt" />
+						<br />
+
+						<div style="font-size: 8pt; text-align: left">
+							#{produk.spesifikasi1},#{produk.spesifikasi2},#{produk.spesifikasi3}</div>
+						<br />
+
+						<h:outputText id="harga" value="#{produk.harga}"
+							style="font-weight: bold;font-size:17pt" />
+						<br />
+
+						<h:commandButton value="Beli"
+							action="#{shoppingCart.addToCart(produk)}" />
+
+					</h:panelGrid>
+
+				</p:dataGrid>
+
+				<h:outputLabel
+					value="#{produkBean.itemProduk.kategori} #{produkBean.itemProduk.merek} dengan Harga Termurah"
+					style="font-weight: bold;font-size:15pt" />
+				<hr />
+
+				<p:dataGrid value="#{produkBean.daftarProdukMurah}" var="produk"
+					type="unordered" produkType="none" columns="10">
+					<h:graphicImage
+						value="//resources/images/mac-apple/#{produk.gambar}" />
+					<br />
+					<h:outputText value="#{produk.nama}"
+						style="font-weight: bold;font-size:10pt" />
+					<br />
+					<h:outputText value="#{produk.harga}" style="font-size:10pt" />
+				</p:dataGrid>
+
+				<br />
+				<br />
+				<h:outputLabel
+					value="#{produkBean.itemProduk.kategori} #{produkBean.itemProduk.merek} Yang Dibeli Paling Banyak "
+					style="font-weight: bold;font-size:15pt" />
+				<p:dataGrid value="#{produkBean.daftarProdukMurah}" var="produk"
+					type="unordered" produkType="none" columns="10">
+					<h:graphicImage
+						value="//resources/images/mac-apple/#{produk.gambar}" />
+					<br />
+					<h:outputText value="#{produk.nama}"
+						style="font-weight: bold;font-size:10pt" />
+					<br />
+					<h:outputText value="#{produk.harga}" style="font-size:10pt" />
+				</p:dataGrid>
+
+				<hr />
+
+				<br />
+				<br />
+
+				<h:outputLabel value="Produk Yang Dibeli Bersamaan"
+					style="font-weight: bold;font-size:15pt" />
+				<p:dataGrid value="#{produkBean.daftarProdukMurah}" var="produk"
+					type="unordered" produkType="none" columns="10">
+					<h:graphicImage
+						value="//resources/images/mac-apple/#{produk.gambar}" />
+					<br />
+					<h:outputText value="#{produk.nama}"
+						style="font-weight: bold;font-size:10pt" />
+					<br />
+					<h:outputText value="#{produk.harga}" style="font-size:10pt" />
+				</p:dataGrid>
+
+				<hr />
+
+			</h:form>
+
+		</p:layout>
+
+	</ui:define>
+</ui:composition>
+
+
+
+
+
+
+
+

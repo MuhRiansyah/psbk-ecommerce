@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<h:form id="menuForm">
+		<p:menubar>
+			<p:menuitem value="Beranda" outcome="daftarProduk.xhtml"
+				icon="ui-icon-home" />
+			<p:submenu label="Produk Toko">
+				<p:submenu label="Notebook">				
+					<p:menuitem value="Macintosh" actionListener="#{produkBean.setURL(1,1)}"
+						update=":ProdukListForm:datalist" />
+					<p:menuitem value="Lenovo" actionListener="#{produkBean.setURL(2,1)}"
+						update=":ProdukListForm:datalist" />
+					<p:menuitem value="Asus" action="#{produkBean.setURL(1,1)}"
+						update=":ProdukListForm:datalist" />
+					<p:menuitem value="Acer" action="#{produkBean.setURL(1,1)}"
+						update=":ProdukListForm:datalist" />
+					<p:menuitem value="Toshiba" action="#{produkBean.setURL(1,1)}"
+						update=":ProdukListForm:datalist" />
+				</p:submenu>
+
+				<p:submenu label="Smartphone/Tablet">
+					<p:menuitem value="Iphone" action="#{produkBean.setURL(1,2)}"
+						update=":ProdukListForm:datalist" />
+					<p:menuitem value="Lenovo" action="#{produkBean.setURL(1,2)}"
+						update=":ProdukListForm:datalist" />
+					<p:menuitem value="Samsung" action="#{produkBean.setURL(1,2)}"
+						update=":ProdukListForm:datalist" />
+					<p:menuitem value="Ipad" action="#{produkBean.setURL(1,2)}"
+						update=":ProdukListForm:datalist" />
+					<p:menuitem value="Asus" action="#{produkBean.setURL(1,2)}"
+						update=":ProdukListForm:datalist" />
+					<p:menuitem value="Acer" action="#{produkBean.setURL(1,2)}"
+						update=":ProdukListForm:datalist" />
+				</p:submenu>
+
+				<p:submenu label="Desktop">
+					<p:menuitem value="Lenovo" outcome="daftarProduk.xhtml" />
+					<p:menuitem value="Macintosh" outcome="daftarProduk.xhtml" />
+					<p:menuitem value="Asus" outcome="daftarProduk.xhtml" />
+					<p:menuitem value="Acer" outcome="daftarProduk.xhtml" />
+					<p:menuitem value="Compaq" outcome="daftarProduk.xhtml" />
+					<p:menuitem value="Toshiba" outcome="daftarProduk.xhtml" />
+				</p:submenu>
+
+				<p:submenu label="Printer">
+					<p:menuitem value="Canon" outcome="daftarProduk.xhtml" />
+					<p:menuitem value="Epson" outcome="daftarProduk.xhtml" />
+					<p:menuitem value="Xerox" outcome="daftarProduk.xhtml" />
+					<p:menuitem value="HP" outcome="daftarProduk.xhtml" />
+				</p:submenu>
+				<p:submenu label="Modem">
+					<p:menuitem value="Bar" outcome="daftarProduk.xhtml" />
+					<p:menuitem value="Pie" outcome="daftarProduk.xhtml" />
+				</p:submenu>
+				<p:submenu label="Powerbank">
+					<p:menuitem value="Iphone" update=":ProdukListForm:datalist" />
+					<p:menuitem value="Lenovo" update=":ProdukListForm:datalist" />
+					<p:menuitem value="Samsung" update=":ProdukListForm:datalist" />
+				</p:submenu>
+				<p:submenu label="Hardisk External">
+					<p:menuitem value="Bar" outcome="daftarProduk.xhtml" />
+					<p:menuitem value="Pie" outcome="daftarProduk.xhtml" />
+				</p:submenu>
+			</p:submenu>
+			
+			<p:menuitem value="keranjang belanjaan : #{shoppingCart.jumlahProduk} item" 
+				action="pembelianProduk"
+				icon="ui-icon-cart" />
+				
+			<p:menuitem value="Logout" action="#{loginBean.doLogout()}"
+				icon="ui-icon-extlink" />
+
+		</p:menubar>
+	</h:form>
+
+</ui:composition>

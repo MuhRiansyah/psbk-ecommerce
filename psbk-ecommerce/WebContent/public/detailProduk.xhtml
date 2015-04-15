@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title><ui:insert name="title">Admin | SI Pengelolaan Mahasiswa</ui:insert></title>
+	<h:outputStylesheet library="css" name="animate.css" />
+	<h:outputStylesheet library="css" name="reset.css" />
+	<h:outputStylesheet library="css" name="styles.css" />
+	<h:outputStylesheet library="css" name="pfcrud.css" />
+</h:head>
+<h:body>
+
+	<p:layoutUnit position="north">
+		<h3>ISLAM ADDICTED</h3>
+		<h:form>
+			<p:menubar>
+				<p:menuitem value="Home" outcome="daftarProduk.jsf"
+					icon="ui-icon-home" />
+				<p:menuitem value="Produk Toko" outcome="daftarProduk.jsf"
+					icon="ui-icon" />
+			<p:menuitem value="keranjang belanjaan : #{shoppingCart.jumlahProduk} item" 
+				action="pembelianProduk"
+				icon="ui-icon-cart" />
+					
+			</p:menubar>
+		</h:form>
+	</p:layoutUnit>
+
+	<p:layoutUnit position="center">
+		<p:growl id="growl"/>
+		<h:form>
+			<p:dataGrid value="#{produkBean.itemProduk}"
+				var="produk" produkType="none" paginator="false">
+				<h:panelGrid columns="1" style="width:100%;text-align:center">
+
+					<h:graphicImage value="//resources/images/mac-apple/#{produk.gambar}" />
+					
+					<h:outputText value="#{produk.nama}"
+						style="font-weight: bold;font-size:18pt" />
+					<br />
+					
+					<div style="font-size: 8pt; text-align: left">
+						#{produk.spesifikasi1},#{produk.spesifikasi2},#{produk.spesifikasi3}</div>
+					<br />
+					
+					<h:outputText id="harga" value="#{produk.harga}"
+						style="font-weight: bold;font-size:17pt" />
+					<br />
+										
+					<h:commandButton value="Beli" 
+					action="#{shoppingCart.addToCart(produk)}" />
+										
+				</h:panelGrid>
+
+			</p:dataGrid>
+
+			<h:outputLabel
+				value="#{produkBean.itemProduk.kategori} #{produkBean.itemProduk.merek} dengan Harga Termurah"
+				style="font-weight: bold;font-size:15pt" />
+			<hr />
+			
+			<p:dataGrid value="#{produkBean.daftarProdukMurah}" var="produk" type="unordered"
+				produkType="none" columns="10">
+				<h:graphicImage value="//resources/images/mac-apple/#{produk.gambar}"/><br/>
+				<h:outputText value="#{produk.nama}" style="font-weight: bold;font-size:10pt" /><br/>
+				<h:outputText value="#{produk.harga}" style="font-size:10pt" />
+			</p:dataGrid>
+			
+			<br/><br/>
+			<h:outputLabel
+				value="#{produkBean.itemProduk.kategori} #{produkBean.itemProduk.merek} Yang Dibeli Paling Banyak "
+				style="font-weight: bold;font-size:15pt" />
+			<p:dataGrid value="#{produkBean.daftarProdukMurah}" var="produk" type="unordered"
+				produkType="none" columns="10">
+				<h:graphicImage value="//resources/images/mac-apple/#{produk.gambar}"/><br/>
+				<h:outputText value="#{produk.nama}" style="font-weight: bold;font-size:10pt" /><br/>
+				<h:outputText value="#{produk.harga}" style="font-size:10pt" />
+			</p:dataGrid>
+				
+			<hr />
+			
+			<br/><br/>
+	
+			<h:outputLabel value="Produk Yang Dibeli Bersamaan"
+				style="font-weight: bold;font-size:15pt" />
+			<p:dataGrid value="#{produkBean.daftarProdukMurah}" var="produk" type="unordered"
+				produkType="none" columns="10">
+				<h:graphicImage value="//resources/images/mac-apple/#{produk.gambar}"/><br/>
+				<h:outputText value="#{produk.nama}" style="font-weight: bold;font-size:10pt" /><br/>
+				<h:outputText value="#{produk.harga}" style="font-size:10pt" />
+			</p:dataGrid>
+				
+			<hr />
+			
+		</h:form>
+
+	</p:layoutUnit>
+
+	<p:layoutUnit position="south">
+		<center>@Copyright 2015 - Islam Addicted Corp</center>
+	</p:layoutUnit>
+
+
+
+
+</h:body>
+
+
+</html>
