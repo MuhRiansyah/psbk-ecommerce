@@ -422,5 +422,11 @@ public class ProdukBean {
 	public List<Produk> getListProduk() {
 		return listProduk;
 	}
+	
+	// nitip code error
+	public Produk getItemProduk2() {
+		
+	}
+	
 
 }
